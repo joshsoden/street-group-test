@@ -16,6 +16,7 @@ class PersonObjectConstructor
         }
     }
 
+    // Check if name is valid
     function isNameValid($name) {
         // Check for required fields
         $name_array = explode(" ", $name);
@@ -23,6 +24,9 @@ class PersonObjectConstructor
             error_log($name . " is not a valid name. ");
             return false;
         }
+
+        // Name is valid; process into object
+        $person_object = new Person();
 
         error_log($name . " is a valid name!");
         return true;

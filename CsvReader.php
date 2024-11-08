@@ -18,7 +18,6 @@ class CsvReader
         while (($data = fgetcsv($open, null, ",")) !== FALSE) {
             // Read data 
             $data = $this->removeWhiteSpaceFromArray($data);
-            error_log(json_encode($data));
             $this->parseCsvRow($data);
             $array[] = $data;
         }
@@ -36,7 +35,6 @@ class CsvReader
 
     // Parse 'person' data and convert to object
     function parseCsvPerson($person) {
-        error_log("New person: " . $person);
         // TODO: Inject constructor into class
         $constructor = new PersonObjectConstructor();
         $obj = $constructor->createPersonObject($person);
