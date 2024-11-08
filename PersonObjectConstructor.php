@@ -3,13 +3,33 @@
 class PersonObjectConstructor 
 {
     // For checking against strings
-    public array $titles = ["Mr", "Mrs", "Ms", "Mister", "Miss", "Dr"];
+    public array $titles = ["Mr", "Mrs", "Ms", "Mister", "Miss", "Dr", "Prof"];
     public array $joins  = ["&", "and"];
 
-    // For each person
-    public string $person;
+    function __construct() {}
 
-    function __construct($person) {
-        $this->person = $person;
-    } 
+    function createPersonObject($person) {
+        if ($this->isNameValid($person)) {
+
+        } else { 
+            return null;
+        }
+    }
+
+    function isNameValid($name) {
+        // Check for required fields
+        $name_array = explode(" ", $name);
+        if (count($name_array) < 2 || !$this->hasTitle($name_array)) {
+            error_log($name . " is not a valid name. ");
+            return false;
+        }
+
+        error_log($name . " is a valid name!");
+        return true;
+    }
+
+    // Check whether the array has a title; required field 
+    function hasTitle($name_array) {
+        return !empty(array_intersect($name_array, $this->titles));
+    }
 }

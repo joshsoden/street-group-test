@@ -1,5 +1,8 @@
 <?php 
 
+require("./PersonObjectConstructor.php");
+
+
 class CsvReader
 {
     public string $fileName;
@@ -34,6 +37,10 @@ class CsvReader
     // Parse 'person' data and convert to object
     function parseCsvPerson($person) {
         error_log("New person: " . $person);
+        // TODO: Inject constructor into class
+        $constructor = new PersonObjectConstructor();
+        $obj = $constructor->createPersonObject($person);
+
     }
 
     function removeWhiteSpaceFromArray($array) {
