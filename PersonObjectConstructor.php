@@ -1,7 +1,5 @@
 <?php 
 
-require("./PersonObject.php");
-
 class PersonObjectConstructor 
 {
     // For checking against strings
