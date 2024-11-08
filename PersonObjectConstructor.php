@@ -1,5 +1,7 @@
 <?php 
 
+require("./PersonObject.php");
+
 class PersonObjectConstructor 
 {
     // For checking against strings
@@ -25,15 +27,36 @@ class PersonObjectConstructor
             return false;
         }
 
-        // Name is valid; process into object
-        $person_object = new Person();
 
         error_log($name . " is a valid name!");
+
+        $fields = $this->getFieldsFromNameArray($name_array);
+
         return true;
     }
 
     // Check whether the array has a title; required field 
     function hasTitle($name_array) {
-        return !empty(array_intersect($name_array, $this->titles));
+        return $this->arrayContainsConfigValues($name_array, $this->titles);
+    }
+
+    // Check whether array contains "&" or "and"
+    function hasMultipleNames($name_array) {
+        return $this->arrayContainsConfigValues($name_array, $this->joins);
+    }
+
+    function arrayContainsConfigValues($array, $config) {
+        return !empty(array_intersect($array, $config));
+    }
+
+
+    function getFieldsFromNameArray($name_array) {
+        if ($this->hasMultipleNames($name_array)) {
+            // Process with multiple
+            error_log("Multiple names - processing as multiple");
+        } else {
+            // Process single name
+            error_log("Single name - processing as one name only");
+        }
     }
 }
