@@ -10,29 +10,24 @@ class PersonObjectConstructor
 
     function __construct() {}
 
-    function createPersonObject($person) {
-        if ($this->isNameValid($person)) {
-
+    function createPersonObject($name) {
+        $valid_name_array = $this->returnValidName($name);
+        if ($valid_name_array) {
+            $person = $this->createPersonFromNameArray($valid_name_array);
+            $this->echoPersonValues($person);
         } else { 
             return null;
         }
     }
 
     // Check if name is valid
-    function isNameValid($name) {
+    function returnValidName($name) {
         // Check for required fields
         $name_array = explode(" ", $name);
         if (count($name_array) < 2 || !$this->hasTitle($name_array)) {
-            error_log($name . " is not a valid name. ");
             return false;
         }
-
-
-        error_log($name . " is a valid name!");
-
-        $fields = $this->getFieldsFromNameArray($name_array);
-
-        return true;
+        return $name_array;
     }
 
     // Check whether the array has a title; required field 
@@ -49,14 +44,55 @@ class PersonObjectConstructor
         return !empty(array_intersect($array, $config));
     }
 
+    function trim_name($name) {
+        return trim($name, ".");
+    }
 
-    function getFieldsFromNameArray($name_array) {
+    function createPersonFromNameArray($name_array) {
         if ($this->hasMultipleNames($name_array)) {
             // Process with multiple
-            error_log("Multiple names - processing as multiple");
         } else {
             // Process single name
-            error_log("Single name - processing as one name only");
+            return $this->createPersonFromSingleName($name_array);
         }
+    }
+
+    function createPersonFromSingleName($name_array) {
+        // get length of array
+        $array_length = count($name_array);
+        $title = $name_array[0];
+        $first_name = null;
+        $initial = null; 
+        $last_name = $name_array[$array_length - 1];
+
+        if ($array_length > 2) {
+            $first = $name_array[1];
+            if (strlen($this->trim_name($first)) == 1) {
+                $initial = $this->trim_name($first);
+            } else {
+                $first_name = $first;
+            }
+        }
+
+        return $this->createPerson($title, $first_name, $initial, $last_name);
+    }
+
+    function createPerson($title, $first_name = null, $initial = null, $last_name) {
+        $person = [];
+        $person["title"] = $title;
+        $person["first_name"] = $first_name;
+        $person["initial"] = $initial;
+        $person["last_name"] = $last_name;
+
+        return $person;
+    }
+
+    function echoPersonValues($person) {
+        error_log("```");
+        error_log("person[title] => " . $person['title']);
+        error_log("person[first_name] => " . $person['first_name']);
+        error_log("person[initial] => " . $person['initial']);
+        error_log("person[last_name] => " . $person['last_name']);
+        error_log("```");
     }
 }
