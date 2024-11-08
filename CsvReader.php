@@ -18,8 +18,6 @@ class CsvReader
         }
         fclose($open);
     }
-
-
     // get data from file 
 
     // read through data 
