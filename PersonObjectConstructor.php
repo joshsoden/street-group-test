@@ -49,10 +49,19 @@ class PersonObjectConstructor
     function createPersonFromNameArray($name_array) {
         if ($this->hasMultipleNames($name_array)) {
             // Process with multiple
+            return $this->createPeopleFromMultipleNames($name_array);
         } else {
             // Process single name
             return $this->createPersonFromSingleName($name_array);
         }
+    }
+
+    function createPeopleFromMultipleNames($name_array) {
+        // TODO: Split array to before & after join value 
+        // Get index of join
+        $join_index = key(array_intersect($name_array, $this->joins));
+        $first_person = array_slice($name_array, 0, $join_index);
+        $second_person = array_slice($name_array, $join_index + 1);
     }
 
     function createPersonFromSingleName($name_array) {
