@@ -57,8 +57,7 @@ class PersonObjectConstructor
     }
 
     function createPeopleFromMultipleNames($name_array) {
-        // TODO: Split array to before & after join value 
-        // Get index of join
+        // Split array to before & after join value 
         $join_index = key(array_intersect($name_array, $this->joins));
         $first_person = array_slice($name_array, 0, $join_index);
         $second_person = array_slice($name_array, $join_index + 1);
