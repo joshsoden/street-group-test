@@ -11,8 +11,7 @@ class PersonObjectConstructor
     function createPersonObject($name) {
         $valid_name_array = $this->returnValidName($name);
         if ($valid_name_array) {
-            $person = $this->createPersonFromNameArray($valid_name_array);
-            $this->echoPersonValues($person);
+            $this->createPersonFromNameArray($valid_name_array);
         } else { 
             return null;
         }
@@ -61,6 +60,15 @@ class PersonObjectConstructor
         $join_index = key(array_intersect($name_array, $this->joins));
         $first_person = array_slice($name_array, 0, $join_index);
         $second_person = array_slice($name_array, $join_index + 1);
+
+        // Copy over the last name, if not present in the first person
+        if (count($first_person) == 1) {
+            array_push($first_person, $second_person[count($second_person) - 1]);
+        }
+
+        // Create person 1 + 2 as separate objects
+        $this->createPersonFromNameArray($first_person);
+        $this->createPersonFromNameArray($second_person);
     }
 
     function createPersonFromSingleName($name_array) {
@@ -80,7 +88,8 @@ class PersonObjectConstructor
             }
         }
 
-        return $this->createPerson($title, $first_name, $initial, $last_name);
+        $person = $this->createPerson($title, $first_name, $initial, $last_name);
+        $this->echoPersonValues($person);
     }
 
     function createPerson($title, $first_name = null, $initial = null, $last_name) {
