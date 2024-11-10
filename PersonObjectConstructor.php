@@ -103,6 +103,12 @@ class PersonObjectConstructor
         return $person;
     }
 
+    function log_people_array() {
+        foreach ($this->people as $person) {
+            $this->echoPersonValues($person);
+        }
+    }
+
     function echoPersonValues($person) {
         error_log("```");
         error_log("person[title] => " . $person['title']);

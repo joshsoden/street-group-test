@@ -22,6 +22,8 @@ class CsvReader
             $this->parseCsvRow($data);
         }
 
+        $this->constructor->log_people_array();
+
         fclose($open); 
     }
 
