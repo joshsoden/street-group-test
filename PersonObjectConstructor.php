@@ -9,36 +9,36 @@ class PersonObjectConstructor
 
     function __construct() {}
 
-    function createPersonObject($name) {
-        $valid_name_array = $this->returnValidName($name);
+    function create_person_object($name) {
+        $valid_name_array = $this->return_valid_name($name);
         if ($valid_name_array) {
-            $this->createPersonFromNameArray($valid_name_array);
+            $this->create_person_from_name_array($valid_name_array);
         } else { 
             return null;
         }
     }
 
     // Check if name is valid
-    function returnValidName($name) {
+    function return_valid_name($name) {
         // Check for required fields
         $name_array = explode(" ", $name);
-        if (count($name_array) < 2 || !$this->hasTitle($name_array)) {
+        if (count($name_array) < 2 || !$this->has_title($name_array)) {
             return false;
         }
         return $name_array;
     }
 
     // Check whether the array has a title; required field 
-    function hasTitle($name_array) {
-        return $this->arrayContainsConfigValues($name_array, $this->titles);
+    function has_title($name_array) {
+        return $this->array_contains_config_values($name_array, $this->titles);
     }
 
     // Check whether array contains "&" or "and"
-    function hasMultipleNames($name_array) {
-        return $this->arrayContainsConfigValues($name_array, $this->joins);
+    function has_multiple_names($name_array) {
+        return $this->array_contains_config_values($name_array, $this->joins);
     }
 
-    function arrayContainsConfigValues($array, $config) {
+    function array_contains_config_values($array, $config) {
         return !empty(array_intersect($array, $config));
     }
 
@@ -46,17 +46,17 @@ class PersonObjectConstructor
         return trim($name, ".");
     }
 
-    function createPersonFromNameArray($name_array) {
-        if ($this->hasMultipleNames($name_array)) {
+    function create_person_from_name_array($name_array) {
+        if ($this->has_multiple_names($name_array)) {
             // Process with multiple
-            return $this->createPeopleFromMultipleNames($name_array);
+            return $this->create_people_from_multiple_names($name_array);
         } else {
             // Process single name
-            return $this->createPersonFromSingleName($name_array);
+            return $this->create_person_from_single_name($name_array);
         }
     }
 
-    function createPeopleFromMultipleNames($name_array) {
+    function create_people_from_multiple_names($name_array) {
         // Split array to before & after join value 
         $join_index = key(array_intersect($name_array, $this->joins));
         $first_person = array_slice($name_array, 0, $join_index);
@@ -68,11 +68,11 @@ class PersonObjectConstructor
         }
 
         // Create person 1 + 2 as separate objects
-        $this->createPersonFromNameArray($first_person);
-        $this->createPersonFromNameArray($second_person);
+        $this->create_person_from_name_array($first_person);
+        $this->create_person_from_name_array($second_person);
     }
 
-    function createPersonFromSingleName($name_array) {
+    function create_person_from_single_name($name_array) {
         // get length of array
         $array_length = count($name_array);
         $title = $name_array[0];
@@ -89,11 +89,11 @@ class PersonObjectConstructor
             }
         }
 
-        $person = $this->createPerson($title, $first_name, $initial, $last_name);
+        $person = $this->create_person($title, $first_name, $initial, $last_name);
         array_push($this->people, $person);
     }
 
-    function createPerson($title, $first_name = null, $initial = null, $last_name) {
+    function create_person($title, $first_name = null, $initial = null, $last_name) {
         $person = [];
         $person["title"] = $title;
         $person["first_name"] = $first_name;
@@ -105,11 +105,11 @@ class PersonObjectConstructor
 
     function log_people_array() {
         foreach ($this->people as $person) {
-            $this->echoPersonValues($person);
+            $this->echo_person_values($person);
         }
     }
 
-    function echoPersonValues($person) {
+    function echo_person_values($person) {
         error_log("```");
         error_log("person[title] => " . $person['title']);
         error_log("person[first_name] => " . $person['first_name']);

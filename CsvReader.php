@@ -13,13 +13,13 @@ class CsvReader
         $this->constructor = new PersonObjectConstructor();
     }
 
-    function readFile() {
+    function read_file() {
         $open = fopen($this->fileName, "r");
 
         while (($data = fgetcsv($open, null, ",")) !== FALSE) {
             // Read data 
-            $data = $this->removeWhiteSpaceFromArray($data);
-            $this->parseCsvRow($data);
+            $data = $this->remove_whitespace_from_array($data);
+            $this->parse_csv_row($data);
         }
 
         $this->constructor->log_people_array();
@@ -28,19 +28,19 @@ class CsvReader
     }
 
     // Handle rows in case there are multiple people per row
-    function parseCsvRow($row) {
+    function parse_csv_row($row) {
         foreach($row as $person) {
             // parse person here
-            $this->parseCsvPerson($person);
+            $this->parse_csv_person($person);
         }
     }
 
     // Parse 'person' data and convert to object
-    function parseCsvPerson($person) {
-        return $this->constructor->createPersonObject($person);
+    function parse_csv_person($person) {
+        return $this->constructor->create_person_object($person);
     }
 
-    function removeWhiteSpaceFromArray($array) {
+    function remove_whitespace_from_array($array) {
         return array_filter($array);
     }
     
