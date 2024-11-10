@@ -5,6 +5,7 @@ class PersonObjectConstructor
     // For checking against strings
     public array $titles = ["Mr", "Mrs", "Ms", "Mister", "Miss", "Dr", "Prof"];
     public array $joins  = ["&", "and"];
+    public array $people = [];
 
     function __construct() {}
 
@@ -89,7 +90,7 @@ class PersonObjectConstructor
         }
 
         $person = $this->createPerson($title, $first_name, $initial, $last_name);
-        $this->echoPersonValues($person);
+        array_push($this->people, $person);
     }
 
     function createPerson($title, $first_name = null, $initial = null, $last_name) {
