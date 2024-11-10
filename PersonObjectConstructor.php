@@ -93,7 +93,7 @@ class PersonObjectConstructor
         array_push($this->people, $person);
     }
 
-    function create_person($title, $first_name = null, $initial = null, $last_name) {
+    function create_person($title, $first_name, $initial, $last_name) {
         $person = [];
         $person["title"] = $title;
         $person["first_name"] = $first_name;
